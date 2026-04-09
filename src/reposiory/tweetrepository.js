@@ -6,7 +6,9 @@ class Tweetrepository{
       const tweet=await Tweet.create(data);
       return tweet;
     }catch(e){
-      console.log("somrhting went wrong on the repository layer")
+      console.log("somehting went wrong on the repository layer");
+      console.log(e);
+      throw e;
     }
   }
   async get(id){
@@ -35,9 +37,17 @@ class Tweetrepository{
   }
   async getwithcomments(id){
      try{
-      const tweet=await Tweet.findById(id).populate('comments')
+      const tweet=await Tweet.findById(id).populate({path:'comments'}).lean();
       return tweet;
     }catch(e){
+      console.log("somrhting went wrong on the repository layer")
+    }
+  }
+  async getAll(offset,limit){
+    try{
+      const tweet=await Tweet.find().skip(offset).limit(limit);
+      return tweet;
+    } catch(e){
       console.log("somrhting went wrong on the repository layer")
     }
   }
