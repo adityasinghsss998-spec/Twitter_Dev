@@ -19,14 +19,14 @@ class Tweetrepository{
       console.log("somrhting went wrong on the repository layer")
     }
   }
-  async update(id,data){
-    try{
-      const tweet=await Tweet.findByIdAndUpdate(id,data,{new:true});
-      return tweet;
-    }catch(e){
-      console.log("somrhting went wrong on the repository layer")
-    }
-  }
+  // async update(id,data){
+  //   try{
+  //     const tweet=await Tweet.findByIdAndUpdate(id,data,{new:true});
+  //     return tweet;
+  //   }catch(e){
+  //     console.log("somrhting went wrong on the repository layer")
+  //   }
+  // }
   async destroy(id){
     try{
       const tweet=await Tweet.findByIdAndDelete(id);
@@ -52,4 +52,4 @@ class Tweetrepository{
     }
   }
 }
-module.exports=Tweetrepository
+module.exports=Tweetrepository;
