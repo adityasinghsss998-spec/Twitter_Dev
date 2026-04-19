@@ -1,5 +1,5 @@
 
-const Hashtag=require('../models/hashtags');
+import Hashtag from "../models/hashtags.js";
 class Hashtagrepository{
   async create(data){
     try{
@@ -48,4 +48,4 @@ class Hashtagrepository{
   }
   
 }
-module.exports=Hashtagrepository
+export default Hashtagrepository

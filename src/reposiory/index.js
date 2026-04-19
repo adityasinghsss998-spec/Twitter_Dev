@@ -1,7 +1,6 @@
-const Hashtagrepository = require('./hashtagrepository');
-
-
-module.exports={
-  Tweetrepository: require('./tweetrepository'),
-  Hashtagrepository:require('./hashtagrepository')
+import Tweetrepository from './tweetrepository.js'
+import Hashtagrepository from './hashtagrepository.js'
+export{
+  Tweetrepository,
+  Hashtagrepository
 }

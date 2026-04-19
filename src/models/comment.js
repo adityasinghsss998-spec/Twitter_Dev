@@ -1,4 +1,5 @@
-const mongoose=require('mongoose');
+import mongoose from "mongoose";
+import { comment } from "postcss";
 const CommentSchema=new mongoose.Schema({
   content:{
   type:String,
@@ -10,5 +11,5 @@ const CommentSchema=new mongoose.Schema({
   
 },{timestamps:true})
 
-const Comment=mongoose.model('Comment',CommentSchema);
-module.exports=Comment
+ const Comment=mongoose.model('Comment',CommentSchema);
+ export default Comment;
