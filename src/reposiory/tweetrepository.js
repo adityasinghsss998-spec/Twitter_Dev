@@ -1,6 +1,10 @@
 
 import Tweet from "../models/tweet.js";
-class Tweetrepository{
+import Crudrepository from "./crudrepository.js";
+class Tweetrepository extends Crudrepository{
+  constructor(){
+    super(Tweet);
+  }
   async create(data){
     try{
       const tweet=await Tweet.create(data);
@@ -11,14 +15,7 @@ class Tweetrepository{
       throw e;
     }
   }
-  async get(id){
-    try{
-      const tweet=await Tweet.findById(id);
-      return tweet;
-    }catch(e){
-      console.log("somrhting went wrong on the repository layer")
-    }
-  }
+ 
   // async update(id,data){
   //   try{
   //     const tweet=await Tweet.findByIdAndUpdate(id,data,{new:true});
@@ -27,14 +24,7 @@ class Tweetrepository{
   //     console.log("somrhting went wrong on the repository layer")
   //   }
   // }
-  async destroy(id){
-    try{
-      const tweet=await Tweet.findByIdAndDelete(id);
-      return tweet;
-    }catch(e){
-      console.log("somrhting went wrong on the repository layer")
-    }
-  }
+  
   async getwithcomments(id){
      try{
       const tweet=await Tweet.findById(id).populate({path:'comments'}).lean();
