@@ -3,6 +3,8 @@ import bodyParser from 'body-parser'
 const app=express();
 import {connect} from './config/database.js'
 import TweetService from './services/tweetservice.js';
+import {Userrepository,Tweetrepository} from './reposiory/index.js';
+import Likeservice from './services/likeservice.js';
 const PORT=3000;
 import Apiroutes from './routes/index.js';
 app.use(bodyParser.json())
@@ -13,5 +15,12 @@ app.listen(3000,async ()=>{
   await connect();
   console.log("mongodb server connected");
 
+  const userrepo=new Userrepository();
+  const tweetrepo=new Tweetrepository();
+  const likeservice = new Likeservice();
+  const tweets=await tweetrepo.getAll(0,10);
+  const users=await userrepo.getall();
   
+  const like=await likeservice.togglelink(tweets[0].id,'Tweet',users[0].id);
+  console.log(like);
 })

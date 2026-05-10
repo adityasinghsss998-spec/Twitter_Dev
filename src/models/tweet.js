@@ -5,7 +5,12 @@ const tweetSchema=new mongoose.Schema({
   required:true,
   max:[250,"tweet cannot be more than 250 characters"]
   },
+  likes:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'Like'
+  }]
 },{timestamps:true})
+ 
 // tweetSchema.pre('save',function(next){
 //   console.log('inside the hooks');
 //   this.content=this.content + '....';

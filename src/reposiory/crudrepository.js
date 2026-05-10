@@ -1,6 +1,6 @@
 class Crudrepository{
   constructor(model){
-    this.model=this.model;
+    this.model=model;
   }
   async create(data){
     try{
