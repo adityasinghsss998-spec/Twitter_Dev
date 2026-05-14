@@ -31,5 +31,9 @@ class TweetService{
       */
       return tweet;
    }
+   async gettweet(id){
+      const tweet=await this.tweetrepository.get(id);
+      return tweet;
+      }
 }
 export default TweetService

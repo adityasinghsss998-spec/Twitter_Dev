@@ -2,9 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser'
 const app=express();
 import {connect} from './config/database.js'
-import TweetService from './services/tweetservice.js';
-import {Userrepository,Tweetrepository} from './reposiory/index.js';
-import Likeservice from './services/likeservice.js';
+import passport from 'passport';
+import {passportAuth} from './config/jwtmiddleware.js'
+app.use(passport.initialize());
+passportAuth(passport)
 const PORT=3000;
 import Apiroutes from './routes/index.js';
 app.use(bodyParser.json())

@@ -8,7 +8,13 @@ const tweetSchema=new mongoose.Schema({
   likes:[{
     type:mongoose.Schema.Types.ObjectId,
     ref:'Like'
-  }]
+  }],
+  comments:[
+    {
+       type:mongoose.Schema.Types.ObjectId,
+      ref:'Comment'
+    }
+  ]
 },{timestamps:true})
  
 // tweetSchema.pre('save',function(next){
