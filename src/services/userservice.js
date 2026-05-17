@@ -13,7 +13,30 @@ class Userservice{
      const user=await this.Userrepo.findBy({email});
      return user;
     }catch(e){
-
+       throw e;
+    }
+  }
+  async authenticate(email,password){
+    try{
+      const user=await this.Userrepo.findBy({email});
+    if(!user){
+      throw({
+        message:"no user found",
+        success:false
+      })
+    }
+    if(!user.comparepassword(password)){
+      throw ({
+        message:"INcorrect password",
+        success:false
+      })
+    }
+    const token=user.genJwt();
+    console.log(token)
+    return token;
+    }catch(e){
+      console.log("something went wrong at the service layer")
+        throw e;
     }
   }
 

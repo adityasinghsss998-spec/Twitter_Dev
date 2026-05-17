@@ -6,7 +6,7 @@ class TweetService{
    }
    async create(data){
       const content=data.content;
-      let tags=content.match(/#[a-zA-Z0-9_]+/g)  // this is a regex
+      let tags=content.match(/#[a-zA-Z0-9_]+/g) || [] // this is a regex
       tags=tags.map((tag)=> tag.substr(1)).map(tag=>tag.toLowerCase());
       console.log(tags);
       const tweet=await this.tweetrepository.create(data);

@@ -24,26 +24,15 @@ export const signUp=async (req,res)=>{
 }
 export const login=async (req,res)=>{
   try{
-    const user=await userservice.getuserbyemail(req.body.email);
-    if(!user){
-      return res.status(401).json({
-        message:"no user found",
-        success:false
-      })
-    }
-    if(!user.comparepassword(req.body.password)){
-      return res.status(401).json({
-        message:"INcorrect password",
-        success:false
-      })
-    }
-    const token=user.genJwt();
+    
+    const response =await userservice.authenticate(req.body.email,req.body.password);
     return res.status(200).json({
       success:true,
       message:"Successfully logged in",
-      data:token,
+      data:response,
       err:{}
     })
+    
   }catch(e){
      console.log(e);
        return res.status(500).json({

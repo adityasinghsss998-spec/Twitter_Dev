@@ -1,25 +1,33 @@
 import multer from "multer";
 import multers3 from "multer-s3";
-import aws from "aws-sdk";
+import { S3Client } from "@aws-sdk/client-s3";
 import dotenv from "dotenv";
+
 dotenv.config();
-aws.config.update({
-  region:process.env.AWS_REGION,
-  secretAccessKey:process.env.SECRET_ACCESS_KEY,
-  accessKeyId:process.env.ACCESS_KEY_ID
-})
-const s3=new aws.S3();
-const upload=multer({
-  storage:multers3({
-    s3:s3,
-    bucket:process.env.BUCKET_NAME,
-    acl:'public-read',
-    metadata: (req, file, cb) => {
+
+const s3 = new S3Client({
+    region: process.env.AWS_REGION,
+    // Fix: Credentials must be inside a 'credentials' object
+    credentials: {
+        secretAccessKey: process.env.SECRET_ACCESS_KEY,
+        accessKeyId: process.env.ACCESS_KEY_ID
+    }
+});
+
+const upload = multer({
+    storage: multers3({
+        s3: s3,
+        bucket: process.env.BUCKET_NAME,
+        acl: 'public-read', // Requires ACLs enabled in S3 Console
+        metadata: (req, file, cb) => {
             cb(null, { fieldName: file.fieldname });
         },
         key: (req, file, cb) => {
-            cb(null, `twitter-${Date.now()}-${file.originalname}`);
+            // It's good practice to replace spaces in filenames to avoid URL issues
+            const fileName = file.originalname.replace(/\s/g, '-');
+            cb(null, `twitter-${Date.now()}-${fileName}`);
         }
-  })
-})
-export default upload
+    })
+});
+
+export default upload;

@@ -1,14 +1,23 @@
 import TweetService from "../services/tweetservice.js";
 const tweetservice=new TweetService();
+import upload from '../config/flie-upload-s3-config.js'
+const singleuploader=upload.single('image');
 export const create=async(req,res)=>{
    try{
-     const response=await tweetservice.create(req.body);
-     return res.status(201).json({
+    singleuploader(req,res,async function(err,data){
+       if(err){
+        return res.status(500).json({error:err});
+       }
+       console.log('image url is',req.file);
+       const response=await tweetservice.create(req.body);
+      return res.status(201).json({
       success:true,
       data:response,
       message:"Sucessfully created a tweet",
       err:{}
      })
+    })
+     
    }catch(e){
       return res.status(201).json({
          success:false,
